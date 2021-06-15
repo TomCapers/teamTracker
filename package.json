@@ -1,0 +1,28 @@
+{
+  "name": "teamTracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TomCapers/teamTracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TomCapers/teamTracker/issues"
+  },
+  "homepage": "https://github.com/TomCapers/teamTracker#readme",
+  "dependencies": {
+    "inquire": "^0.4.8",
+    "jest": "^27.0.4"
+  }
+}
