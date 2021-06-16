@@ -21,32 +21,33 @@ const fs = require('fs');
         .prompt([
         {
             type: "input",
-            name: "choice",
+            name: "managerChoice",
             message: "Please enter the manager's name.",
                      
         },
         {
             type: "input",
-            name: "choice",
+            name: "managerId",
             message: "Please enter the employee ID.",
                      
         },
         {
             type: "input",
-            name: "choice",
+            name: "managerEmail",
             message: "Please enter the email address.",
                      
         },
         {
             type: "input",
-            name: "choice",
+            name: "managerNumber",
             message: "Please enter the office number.",
                      
         },
+
         {
             type: 'checkbox',
             message: 'Do you wish to add another employee?',
-            name: 'role',
+            name: 'addEmployee',
             choices: ['Yes', 'No'],
           },
 
@@ -57,7 +58,44 @@ const fs = require('fs');
             choices: ['Engineer', 'Intern'],
           },
         ])
+
+        
         .then((data) => {
+            if (data.role === 'Engineer'){
+                inquirer.prompt([
+        {
+            type: "input",
+            name: "engineerChoice",
+            message: "Please enter the engineer's name.",
+                     
+        },
+        {
+            type: "input",
+            name: "engineerId",
+            message: "Please enter the employee ID.",
+                     
+        },
+        {
+            type: "input",
+            name: "engineerEmail",
+            message: "Please enter the email address.",
+                
+            },
+        {
+            type: "input",
+            name: "engineerGitHub",
+            message: "Please enter the git hub user name.",
+                
+            }
+        ]).then(data => {
+
+        })
+
+        } else if (data.role === "Intern"){
+            inquier.prompt([])
+        }
+
+
             const filename = `${data.name.toLowerCase().split(' ').join('')}.json`;
         
             fs.writeFile(filename, JSON.stringify(data, null, '\t'), (err) =>
