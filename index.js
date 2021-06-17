@@ -88,11 +88,38 @@ const fs = require('fs');
                 
             }
         ]).then(data => {
-
+            fs.appendFile('index.html', `${data}`, (err) =>
+            err ? console.error(err) : console.log('Engineer added!')
+            );
         })
 
         } else if (data.role === "Intern"){
-            inquier.prompt([])
+            inquier.prompt([
+                {
+                    type: "input",
+                    name: "internChoice",
+                    message: "Please enter the Intern's name.",
+                             
+                },
+                {
+                    type: "input",
+                    name: "internId",
+                    message: "Please enter the employee ID.",
+                             
+                },
+                {
+                    type: "input",
+                    name: "internEmail",
+                    message: "Please enter the email address.",
+                        
+                    },
+                {
+                    type: "input",
+                    name: "internSchool",
+                    message: "Please enter the school the intern graduated from.",
+                        
+                    }  
+            ])
         }
 
 
