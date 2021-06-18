@@ -1,24 +1,16 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const Manager = require('./lib/manager');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
 
-//inquire asks for manager info
-
-//ask if user wishes to fill out other employee positions
-    //if not, end enquirer and load html with fs
-    //if intern, use inquirer intern question set
-    //if engineer, use inquirer engineer question set
-    //after question, ask if they want to add another employee
-
-    //.then
-        //take answers
-        // pass content into the template
-        // pass template into fs
-        // write new html file into dist folder
-        // 
+let memberArr = [];
 
 
-    inquirer
-        .prompt([
+
+
+
+    inquirer.prompt([
         {
             type: "input",
             name: "managerChoice",
@@ -43,90 +35,110 @@ const fs = require('fs');
             message: "Please enter the office number.",
                      
         },
-
-        {
-            type: 'checkbox',
-            message: 'Do you wish to add another employee?',
-            name: 'addEmployee',
-            choices: ['Yes', 'No'],
-          },
-
-        {
-            type: 'checkbox',
-            message: 'What is the employees role?',
-            name: 'role',
-            choices: ['Engineer', 'Intern'],
-          },
-        ])
-
+    ]).then(answer => {
+        const manager = new Manager(answer.managerChoice, answer.managerId, answer.managerEmail, answer.managerNumber);
+        memberArr.push(manager);
+        askQuests();
+    });
         
-        .then((data) => {
-            if (data.role === 'Engineer'){
-                inquirer.prompt([
-        {
-            type: "input",
-            name: "engineerChoice",
-            message: "Please enter the engineer's name.",
-                     
-        },
-        {
-            type: "input",
-            name: "engineerId",
-            message: "Please enter the employee ID.",
-                     
-        },
-        {
-            type: "input",
-            name: "engineerEmail",
-            message: "Please enter the email address.",
-                
-            },
-        {
-            type: "input",
-            name: "engineerGitHub",
-            message: "Please enter the git hub user name.",
-                
-            }
-        ]).then(data => {
-            fs.appendFile('index.html', `${data}`, (err) =>
-            err ? console.error(err) : console.log('Engineer added!')
-            );
-        })
+    function askQuests(){
+        inquirer.prompt([
+            {
+                type: 'checkbox',
+                message: 'Do you wish to add another employee?',
+                name: 'addEmployee',
+                choices: ['Yes', 'No'],
+              },
+    
+            {
+                type: 'checkbox',
+                message: 'What is the employees role?',
+                name: 'role',
+                choices: ['Engineer', 'Intern'],
+              },
+            ]).then((data) => {
+                if (data.addEmployee === 'No'){
+                    createHtml();
+                }
 
-        } else if (data.role === "Intern"){
-            inquier.prompt([
+                else if (data.role === 'Engineer'){
+                    engineerQuestion();
+
+                }else if (data.role === 'Intern'){
+                    internQuestion();
+            }
+                });
+            
+
+        function engineerQuestion() {
+            inquirer.prompt([
                 {
                     type: "input",
-                    name: "internChoice",
-                    message: "Please enter the Intern's name.",
-                             
+                    name: "engineerChoice",
+                    message: "Please enter the engineer's name.",
+                                
                 },
                 {
                     type: "input",
-                    name: "internId",
+                    name: "engineerId",
                     message: "Please enter the employee ID.",
-                             
+                                
                 },
                 {
                     type: "input",
-                    name: "internEmail",
+                    name: "engineerEmail",
                     message: "Please enter the email address.",
                         
                     },
                 {
                     type: "input",
-                    name: "internSchool",
-                    message: "Please enter the school the intern graduated from.",
-                        
-                    }  
-            ])
-        }
+                    name: "engineerGitHub",
+                    message: "Please enter the git hub user name.",
+                },
+            ]).then(data =>{
+                const engineer = new Engineer(data.engineerChoice, data.engineerId, data.engineerEmail, data.engineerGitHub);
+                memberArr.push(engineer);
+                askQuests();
+            });
+        };    
 
+                function internQuestion(){
+                    inquier.prompt([
+                        {
+                            type: "input",
+                            name: "internChoice",
+                            message: "Please enter the Intern's name.",
+                                     
+                        },
+                        {
+                            type: "input",
+                            name: "internId",
+                            message: "Please enter the employee ID.",
+                                     
+                        },
+                        {
+                            type: "input",
+                            name: "internEmail",
+                            message: "Please enter the email address.",
+                                
+                            },
+                        {
+                            type: "input",
+                            name: "internSchool",
+                            message: "Please enter the school the intern graduated from.",
+                                
+                            }, 
+                    ]).then(data =>{
+                        const intern = new Intern(data.internChoice, data.internId, data.internEmail, data.internSchool);
+                        memberArr.push(intern);
+                        askQuests();
+                    });
+                };
+                    function createHtml(){
+                        let htmlString = htmlquery()
+                        fs.writeFile('./dist/index.html', htmlString, 'utf-8');
+                    };
+                };
+                    
 
-            const filename = `${data.name.toLowerCase().split(' ').join('')}.json`;
-        
-            fs.writeFile(filename, JSON.stringify(data, null, '\t'), (err) =>
-              err ? console.log(err) : console.log('Success!')
-            );
-          });
-    
+                
