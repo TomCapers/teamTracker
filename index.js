@@ -135,9 +135,46 @@ let memberArr = [];
                     });
                 };
                     function createHtml(){
-                        let htmlString = htmlquery()
-                        fs.writeFile('./dist/index.html', htmlString, 'utf-8');
-                    };
+                        var htmlstr = `<!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Document</title>
+                    </head>
+                    <body>
+                    `;
+                    for(var i = 0; i < memberArr.length; i++){  
+                        htmlstr += 
+                    `<div class="employee">
+                        <h1>name: ${memberArr[i].getName()}</h1>
+                        <h2>role: ${memberArr[i].getRole()}</h2>
+                        <p>id: ${memberArr[i].getId()}</p>
+                        <p>email: <a href="mailto:${memberArr[i].getEmail()}">${memberArr[i].getEmail()}</a></p>
+                    `;
+                    if(memberArr[i].getRole() === 'Manager'){
+                        htmlstr += 
+                        `<p>office number: ${memberArr[i].getOfficeNumber()}</p>
+                        `;
+                    }else if(memberArr[i].getRole() === 'Engineer'){
+                        htmlstr += 
+                        `<p>github: <a href="${memberArr[i].getGithub()}">${memberArr[i].getGithub()}</a></p>
+                        `;
+                    }else if(memberArr[i].getRole() === 'Intern'){
+                        htmlstr += 
+                        `<p>school: ${memberArr[i].getSchool()}</p>
+                        </div>
+                        `;
+                    }
+                    }
+                    htmlstr += 
+                    `</body>
+                    </html>`;
+                    fs.appendFile('home.html', `${htmlstr}\n`, (err) =>
+                        err ? console.error(err) : console.log(htmlstr)
+                    );
+                }              
                 };
                     
 
