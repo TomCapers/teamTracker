@@ -50,12 +50,7 @@ let memberArr = [];
                 choices: ['Yes', 'No'],
               },
     
-            // {
-            //     type: 'checkbox',
-            //     message: 'What is the employees role?',
-            //     name: 'role',
-            //     choices: ['Engineer', 'Intern'],
-            //   },
+            
             ]).then((answer) => {
                 if (answer.addEmployee === 'No'){
                     createHtml();
@@ -64,12 +59,7 @@ let memberArr = [];
                     askRole();
                 }
 
-            //     else if (answer.role === 'Engineer'){
-            //         engineerQuestion();
-
-            //     }else if (answer.role === 'Intern'){
-            //         internQuestion();
-            // }
+            
                 });
             
             };
@@ -162,29 +152,37 @@ let memberArr = [];
                         <meta charset="UTF-8">
                         <meta http-equiv="X-UA-Compatible" content="IE=edge">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Document</title>
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+                        <link rel="stylesheet" type="text/css" href="styles.css">
+                        <title>Team Tracker</title>
                     </head>
-                    <body>
+                    <body class="card-columns">
                     `;
                     for(var i = 0; i < memberArr.length; i++){  
                         htmlstr += 
-                    `<div class="employee">
-                        <h1>name: ${memberArr[i].getName()}</h1>
-                        <h2>role: ${memberArr[i].getRole()}</h2>
-                        <p>id: ${memberArr[i].getId()}</p>
-                        <p>email: <a href="mailto:${memberArr[i].getEmail()}">${memberArr[i].getEmail()}</a></p>
+                    `<div class="card row mx-auto" style="width: 200px">
+                        <div class="card-header">
+                        ${memberArr[i].getRole()}
+                        </div>
+                        <div class="card-body">
+                        <h1>Name: ${memberArr[i].getName()}</h1>
+                        <p>ID: ${memberArr[i].getId()}</p>
+                        <p>Email: <a href="mailto:${memberArr[i].getEmail()}">${memberArr[i].getEmail()}</a></p>
                     `;
                     if(memberArr[i].getRole() === 'Manager'){
                         htmlstr += 
-                        `<p>office number: ${memberArr[i].getOfficeNumber()}</p>
-                        `;
+                        `<p>Office Number: ${memberArr[i].getOfficeNumber()}</p>
+                        </div>
+                        </div>`;
                     }else if(memberArr[i].getRole() === 'Engineer'){
                         htmlstr += 
                         `<p>github: <a href="${memberArr[i].getGithub()}">${memberArr[i].getGithub()}</a></p>
-                        `;
+                        </div>
+                        </div>`;
                     }else if(memberArr[i].getRole() === 'Intern'){
                         htmlstr += 
-                        `<p>school: ${memberArr[i].getSchool()}</p>
+                        `<p>School: ${memberArr[i].getSchool()}</p>
+                        </div>
                         </div>
                         `;
                     }
