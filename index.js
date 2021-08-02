@@ -35,7 +35,7 @@ let memberArr = [];
             message: "Please enter the office number.",
                      
         },
-    ]).then(answer => {
+    ]).then((answer) => {
         const manager = new Manager(answer.managerChoice, answer.managerId, answer.managerEmail, answer.managerNumber);
         memberArr.push(manager);
         askQuests();
@@ -44,31 +44,52 @@ let memberArr = [];
     function askQuests(){
         inquirer.prompt([
             {
-                type: 'checkbox',
+                type: 'list',
                 message: 'Do you wish to add another employee?',
                 name: 'addEmployee',
                 choices: ['Yes', 'No'],
               },
     
-            {
-                type: 'checkbox',
-                message: 'What is the employees role?',
-                name: 'role',
-                choices: ['Engineer', 'Intern'],
-              },
-            ]).then((data) => {
-                if (data.addEmployee === 'No'){
+            // {
+            //     type: 'checkbox',
+            //     message: 'What is the employees role?',
+            //     name: 'role',
+            //     choices: ['Engineer', 'Intern'],
+            //   },
+            ]).then((answer) => {
+                if (answer.addEmployee === 'No'){
                     createHtml();
                 }
+                else {
+                    askRole();
+                }
 
-                else if (data.role === 'Engineer'){
-                    engineerQuestion();
+            //     else if (answer.role === 'Engineer'){
+            //         engineerQuestion();
 
-                }else if (data.role === 'Intern'){
-                    internQuestion();
-            }
+            //     }else if (answer.role === 'Intern'){
+            //         internQuestion();
+            // }
                 });
             
+            };
+        function askRole() {
+            inquirer.prompt([
+                {
+                    type: 'list',
+                    message: 'What is the employees role?',
+                    name: 'role',
+                    choices: ['Engineer', 'Intern'],
+                  }, 
+            ]).then((answer) => {
+                if (answer.role === 'Engineer'){
+                    engineerQuestion();
+                }
+                else {
+                    internQuestion();
+                }
+            })
+        };
 
         function engineerQuestion() {
             inquirer.prompt([
@@ -95,15 +116,15 @@ let memberArr = [];
                     name: "engineerGitHub",
                     message: "Please enter the git hub user name.",
                 },
-            ]).then(data =>{
-                const engineer = new Engineer(data.engineerChoice, data.engineerId, data.engineerEmail, data.engineerGitHub);
+            ]).then((answer) =>{
+                const engineer = new Engineer(answer.engineerChoice, answer.engineerId, answer.engineerEmail, answer.engineerGitHub);
                 memberArr.push(engineer);
                 askQuests();
             });
         };    
 
                 function internQuestion(){
-                    inquier.prompt([
+                    inquirer.prompt([
                         {
                             type: "input",
                             name: "internChoice",
@@ -128,8 +149,8 @@ let memberArr = [];
                             message: "Please enter the school the intern graduated from.",
                                 
                             }, 
-                    ]).then(data =>{
-                        const intern = new Intern(data.internChoice, data.internId, data.internEmail, data.internSchool);
+                    ]).then((answer) =>{
+                        const intern = new Intern(answer.internChoice, answer.internId, answer.internEmail, answer.internSchool);
                         memberArr.push(intern);
                         askQuests();
                     });
@@ -175,7 +196,7 @@ let memberArr = [];
                         err ? console.error(err) : console.log(htmlstr)
                     );
                 }              
-                };
+                ;
                     
 
                 

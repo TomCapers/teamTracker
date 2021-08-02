@@ -23,6 +23,7 @@
   "homepage": "https://github.com/TomCapers/teamTracker#readme",
   "dependencies": {
     "inquire": "^0.4.8",
+    "inquirer": "^8.1.2",
     "jest": "^27.0.4"
   }
 }
